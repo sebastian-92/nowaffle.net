@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="main-styles2.css">
+<style>
+    * {
+        overflow-wrap: break-word;
+    }
+</style>
+</head>
+<body>
+    <table width=100% id="commit-history">
+        <thead>
+            <tr>
+                <th>Commit Date and Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">Loading commit history...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // please don't steal my token
+        // it doesn't have any special perms
+        // just make your own, i like my api creds
+        var check = 1;
+        if (check==1) {
+        document.addEventListener('DOMContentLoaded', function() {
+            const PAT = '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';
+            const repoOwner = 'sebastian-92'; 
+            const repoName = 'sebastian-92.github.io';   
+            const commitsUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits`;
+
+            fetch(commitsUrl, {
+                headers: {
+                    'Authorization': `${PAT}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            })
+            .then(response => response.json())
+            .then(commits => {
+                const commitHistoryTable = document.getElementById('commit-history').getElementsByTagName('tbody')[0];
+                commitHistoryTable.innerHTML = ''; 
+
+                commits.forEach(commit => {
+                    const row = document.createElement('div');
+                    row.className = 'grid-item grid-item--width2';
+
+                    const dateMessageCell = document.createElement('div');
+                    dateMessageCell.className = 'commit-date-message';
+                    dateMessageCell.innerHTML = `
+                        ${new Date(commit.commit.author.date).toLocaleDateString()}<br>
+                        ${new Date(commit.commit.author.date).toLocaleTimeString()}<br><br>
+                        ${commit.commit.message}
+                    `;
+                    row.appendChild(dateMessageCell);
+
+                    commitHistoryTable.appendChild(row);
+                });
+            })
+            .catch(error => {
+                const commitHistoryTable = document.getElementById('commit-history').getElementsByTagName('tbody')[0];
+                commitHistoryTable.innerHTML = '<div class="grid-item"><div class="commit-date-message">Failed to load commit history. Please try again later.</div></div>';
+                console.error('Error fetching commit history:', error);
+            });
+        });
+            } else {
+                            const commitHistoryTable = document.getElementById('commit-history').getElementsByTagName('tbody')[0];
+                commitHistoryTable.innerHTML = '<div class="grid-item"><div class="commit-date-message">Updates are off for maintenance</div></div>'; 
+            }
+    </script>
+</body>
+</html>
