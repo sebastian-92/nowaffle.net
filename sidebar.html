@@ -16,6 +16,7 @@
         <legend>Navigation</legend>
         <div class="input-group">
           <a href="about.html" target="_top">About Me</a>
+          <a href="https://blog.nowaffle.net" target="_top">Blog</a>
           <a href="projects.html" target="_top">Projects</a>
           <a href="books.html" target="_top">Cool Books</a>
           <a href="music.html" target="_top">Cool Music</a>
@@ -34,10 +35,11 @@
         <script
           src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/html-midi-player@1.5.0"></script>
         <label id="midi-title"></label>
-        <midi-player id="random-midi-player" sound-font visualizer="none" loop></midi-player>
+        <midi-player id="random-midi-player" sound-font visualizer="none" autoplay loop></midi-player>
         <label>midis are sourced from
           <a href="https://midicities.com/">midicities.com</a> and
           <a href="https://bitmidi.com/">bitmidi.com</a>!</label>
+
         <script>
           const filelist = [
             "73561_08.mid.mid",
@@ -65,6 +67,13 @@
             "Metallica - Nothing Else Matters.mid",
             "i_want_to_hold_your_hand-beatles.mid",
             "Michael Jackson - Billie Jean.mid",
+            "Black_and_Blues.mid",
+            "crush3.mid",
+            "HotelCalifornia.mid",
+            "LifeInTheFastLane.mid",
+            "My-Heart-Will-Go-On-(From-'Titanic').mid",
+            "P.FLOYD.Comfortably numb.mid",
+            "t123nwjj.mid"
           ];
           function playRandomMidi() {
             if (filelist.length === 0) return;
@@ -81,7 +90,7 @@
       <fieldset><button class="is-sm"
           onclick="document.getElementById('linkhere').select(); document.execCommand('copy');">copy
           button</button><input id='linkhere'
-          value="<a href='https://cbass92.org'><img src='https://cbass92.org/buttons/me.gif'/></a>" /></fieldset>
+          value="<a href='https://nowaffle.net'><img src='https://nowaffle.net/buttons/me.gif'/></a>" /></fieldset>
     </div>
   </dialog>
 </body>

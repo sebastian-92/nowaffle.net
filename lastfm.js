@@ -372,20 +372,20 @@ class Tracks extends HTMLElement {
     #init() {
         const skeleton = create('div', { 'class': 'wrap', 'lang': 'en-GB' },
             create('div', { 'class': 'header' }, create('div', { 'class': 'content' },
-                    create('a', { 'href': '#', 'class': 'userlink' },
-                        create('img', {
-                            'class': 'avatar',
-                            'alt': '',
-                            'src': '' // src to be set from script
-                        })),
-                    create('a', { 'href': 'https://www.last.fm/', 'class': 'lastfm', 'title': 'Last.fm' },
-                        create('div', {}, '')
-                    ),
-                    create('div', { 'class': 'usernamecontainer' },
-                        create('a', { 'href': '#', 'class': 'userlink username' }, '')
-                    ),
-                    create('div', { 'class': 'scrobblehistory' }, '')
-                )
+                create('a', { 'href': '#', 'class': 'userlink' },
+                    create('img', {
+                        'class': 'avatar',
+                        'alt': '',
+                        'src': '' // src to be set from script
+                    })),
+                create('a', { 'href': 'https://www.last.fm/', 'class': 'lastfm', 'title': 'Last.fm' },
+                    create('div', {}, '')
+                ),
+                create('div', { 'class': 'usernamecontainer' },
+                    create('a', { 'href': '#', 'class': 'userlink username' }, '')
+                ),
+                create('div', { 'class': 'scrobblehistory' }, '')
+            )
             ),
             create('div', { 'id': 'playlist', 'inert': false }),
             create('div', { 'class': 'footer' },
@@ -409,10 +409,8 @@ class Tracks extends HTMLElement {
         //  https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility
 
         console.log(
-            `Tracks widget initializing in '${this.#widgetMode}'-mode. ${
-                this.#updates || 'Forever'
-            } times getting ${this.#tracks} tracks for user ${
-                this.#user ?? '(unknown)'
+            `Tracks widget initializing in '${this.#widgetMode}'-mode. ${this.#updates || 'Forever'
+            } times getting ${this.#tracks} tracks for user ${this.#user ?? '(unknown)'
             } every ${this.#interval} seconds.`,
         );
     }
@@ -479,7 +477,7 @@ class Tracks extends HTMLElement {
                 it.shadowRoot.querySelectorAll('.username').forEach((e) => {
                     e.textContent = o.user.name;
                 });
-                it.shadowRoot.querySelectorAll('.scrobblehistory').forEach( (e) => {
+                it.shadowRoot.querySelectorAll('.scrobblehistory').forEach((e) => {
                     e.textContent = scrobbleHistory;
                 });
                 it.shadowRoot.querySelectorAll('img.avatar').forEach((img) => {
@@ -713,7 +711,7 @@ class Tracks extends HTMLElement {
             item.trackUrl = (t.url ?? '').trim();
             item.artistName = (t.artist?.name ?? '').trim();
             item.artistUrl = (t.artist?.url ?? '').trim();
-            item.albumCover = t.image?.find( (i) => i.size === 'medium')['#text']; // 64px
+            item.albumCover = t.image?.find((i) => i.size === 'medium')['#text']; // 64px
             // item.albumCover = t.image?.find(i => i.size === 'large')['#text']; // 174px
             item.albumTitle = (t.album['#text'] ?? '').trim();
             item.albumUrl = t.artist?.url + '/' + encodeURIComponent(item.albumTitle).replaceAll('%20', '+');
@@ -795,91 +793,91 @@ class Tracks extends HTMLElement {
             console.warn('Tracks: The user has no recent tracks!');
         } else if (scrobbles?.length) {
 
-            this.#scrobblesProcessor.process(scrobbles).getItems().forEach( (item) => {
-                    if (item.type === 'track') {
-                        lines.push(create('div', {class: item.pinfo.text === 'playing' ? 'trackinfo nowplaying' : 'trackinfo'},
-                            create('a', {class: 'cover', href: item.albumUrl, tabindex: '-1'},
-                                item.albumCover
-                                    ? create('img', {
-                                        src: item.albumCover,
-                                        alt: '',
-                                        title: item.albumTitle
-                                    })
-                                    : ''),
-                            create('a', {
-                                class: item.loved ? 'track loved' : 'track',
-                                href: item.trackUrl,
-                                title: item.trackName,
-                                tabindex: '-1'
-                            }, item.trackName),
-                            create('div', {class: 'artist'},
-                                create('a', {
-                                    href: item.artistUrl,
-                                    title: item.artistName,
-                                    tabindex: '-1'
-                                }, item.artistName)),
-                            create('div', {
-                                    class: 'play',
-                                    title: item.pinfo.text === 'playing' ? 'Scrobbling now...' : item.pinfo.title
-                                },
-                                item.pinfo.text)
-                        ));
-                    } else if (item.type === 'album') {
-                        const coverLink = create('a', {class: 'cover', href: item.albumUrl, tabindex: '-1'},
+            this.#scrobblesProcessor.process(scrobbles).getItems().forEach((item) => {
+                if (item.type === 'track') {
+                    lines.push(create('div', { class: item.pinfo.text === 'playing' ? 'trackinfo nowplaying' : 'trackinfo' },
+                        create('a', { class: 'cover', href: item.albumUrl, tabindex: '-1' },
                             item.albumCover
                                 ? create('img', {
                                     src: item.albumCover,
                                     alt: '',
                                     title: item.albumTitle
                                 })
-                                : '');
-                        const artistLink = create('a', {
-                            href: item.artistUrl,
-                            title: item.artistName,
-                            class: 'albumArtist',
+                                : ''),
+                        create('a', {
+                            class: item.loved ? 'track loved' : 'track',
+                            href: item.trackUrl,
+                            title: item.trackName,
                             tabindex: '-1'
-                        }, item.artistName);
-                        if (item.splitTitle.extension) {
-                            const albumBasicLink = create('a', {
-                                href: `${item.artistUrl}/${encodeURIComponent(item.splitTitle.basic).replace(/%20/g, '+')}`,
-                                title: item.splitTitle.basic,
-                                class: 'album-title',
+                        }, item.trackName),
+                        create('div', { class: 'artist' },
+                            create('a', {
+                                href: item.artistUrl,
+                                title: item.artistName,
                                 tabindex: '-1'
-                            }, item.splitTitle.basic);
-                            const albumExtensionLink = create('a', {
-                                href: item.albumUrl,
-                                title: item.albumTitle,
-                                class: 'album-title extension',
-                                tabindex: '-1'
-                            }, item.splitTitle.extension);
-                            lines.push(create('div', {class: 'albuminfo'},
-                                coverLink,
-                                create('div', {class: 'albumline'},
-                                    artistLink,
-                                    ' — ',
-                                    albumBasicLink,
-                                    item.splitTitle.spacer,
-                                    albumExtensionLink
-                                )
-                            ));
-                        } else {
-                            const albumLink = create('a', {
-                                href: item.albumUrl,
-                                title: item.albumTitle,
-                                class: 'album-title',
-                                tabindex: '-1'
-                            }, item.albumTitle);
-                            lines.push(create('div', {class: 'albuminfo'},
-                                coverLink,
-                                create('div', {class: 'albumline'},
-                                    artistLink,
-                                    ' — ',
-                                    albumLink
-                                )
-                            ));
-                        }
+                            }, item.artistName)),
+                        create('div', {
+                            class: 'play',
+                            title: item.pinfo.text === 'playing' ? 'Scrobbling now...' : item.pinfo.title
+                        },
+                            item.pinfo.text)
+                    ));
+                } else if (item.type === 'album') {
+                    const coverLink = create('a', { class: 'cover', href: item.albumUrl, tabindex: '-1' },
+                        item.albumCover
+                            ? create('img', {
+                                src: item.albumCover,
+                                alt: '',
+                                title: item.albumTitle
+                            })
+                            : '');
+                    const artistLink = create('a', {
+                        href: item.artistUrl,
+                        title: item.artistName,
+                        class: 'albumArtist',
+                        tabindex: '-1'
+                    }, item.artistName);
+                    if (item.splitTitle.extension) {
+                        const albumBasicLink = create('a', {
+                            href: `${item.artistUrl}/${encodeURIComponent(item.splitTitle.basic).replace(/%20/g, '+')}`,
+                            title: item.splitTitle.basic,
+                            class: 'album-title',
+                            tabindex: '-1'
+                        }, item.splitTitle.basic);
+                        const albumExtensionLink = create('a', {
+                            href: item.albumUrl,
+                            title: item.albumTitle,
+                            class: 'album-title extension',
+                            tabindex: '-1'
+                        }, item.splitTitle.extension);
+                        lines.push(create('div', { class: 'albuminfo' },
+                            coverLink,
+                            create('div', { class: 'albumline' },
+                                artistLink,
+                                ' — ',
+                                albumBasicLink,
+                                item.splitTitle.spacer,
+                                albumExtensionLink
+                            )
+                        ));
+                    } else {
+                        const albumLink = create('a', {
+                            href: item.albumUrl,
+                            title: item.albumTitle,
+                            class: 'album-title',
+                            tabindex: '-1'
+                        }, item.albumTitle);
+                        lines.push(create('div', { class: 'albuminfo' },
+                            coverLink,
+                            create('div', { class: 'albumline' },
+                                artistLink,
+                                ' — ',
+                                albumLink
+                            )
+                        ));
                     }
                 }
+            }
             );
             this.shadowRoot.getElementById('playlist').replaceChildren(...lines);
 
