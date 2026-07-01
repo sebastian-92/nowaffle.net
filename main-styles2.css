@@ -15,24 +15,6 @@
   color: var(--time-color);
 }
 
-body {
-  background-color: black;
-}
-
-h1 {
-  position: absolute;
-  color: red;
-  font-family: helvetica;
-  font-size: 150px;
-  font-weight: 800;
-  font-style: italic;
-  margin: 0px;
-  animation-name: bounce;
-  animation-duration: 30s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
 @keyframes bounce {
   0% {
     left: 0%;
@@ -123,7 +105,6 @@ h1 {
 }
 
 html {
-  background: black;
   background-image: url(background.png);
   color: #00ff41;
   font-size: 1.2em;
