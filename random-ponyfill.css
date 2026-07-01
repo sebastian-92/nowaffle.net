@@ -1,0 +1,4 @@
+:root {
+    --seed: 981234729;
+    --random-number: calc((1 + sin(var(--seed) * var(--index) * var(--index) * 17)) / 2);
+}
