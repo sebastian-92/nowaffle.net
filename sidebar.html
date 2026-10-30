@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/95css@latest/css/95css.min.css" />
+  <link rel="stylesheet" href="/95.css" />
   <style></style>
 </head>
 
@@ -20,7 +20,7 @@
           <a href="projects.html" target="_top">Projects</a>
           <a href="books.html" target="_top">Cool Books</a>
           <a href="music.html" target="_top">Cool Music</a>
-          <a href="links.html" target="_top">Cool Links (not me)</a>
+          <a href="links.html" target="_top">Cool Off-Site Links</a>
           <a href="fun.html" target="_top">Fun Stuff</a>
           <a href="license.html" target="_top">License</a>
         </div>
@@ -32,8 +32,8 @@
       </fieldset>
       <fieldset>
         <legend>Random MIDI!</legend>
-        <script
-          src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/html-midi-player@1.6.0"></script>
+        <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js"></script>
+        <script src="midi-player.js"></script>
         <label id="midi-title"></label>
         <midi-player id="random-midi-player" sound-font visualizer="none" autoplay loop></midi-player>
         <label>song selected from <a href="midi.txt"><strong>442</strong></a> midis, sourced from
