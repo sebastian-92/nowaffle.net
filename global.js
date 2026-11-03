@@ -72,12 +72,12 @@ function GetSwatchTime(showDecimals = true) {
 var r = document.querySelector(':root');
 var mySwatchClock = document.createElement('div');
 mySwatchClock.id = 'swatchClock';
+
 function updateSwatchClock() {
     mySwatchClock.innerHTML = '@' + GetSwatchTime();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    r.style.setProperty('--time-color', getRGBeatNow(true));
     setInterval(function () {
         r.style.setProperty('--time-color', getRGBeatNow(true));
     }, 100);
