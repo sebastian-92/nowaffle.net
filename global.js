@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
     r.style.setProperty('--time-color', getRGBeatNow(true));
     setInterval(function () {
         r.style.setProperty('--time-color', getRGBeatNow(true));
-    }, 10);
+    }, 100);
 });
 document.addEventListener('DOMContentLoaded', function () {
     document.body.appendChild(mySwatchClock);

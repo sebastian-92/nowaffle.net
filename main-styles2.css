@@ -175,6 +175,15 @@ body {
   border-radius: 5px;
   margin-bottom: 5px;
   padding: 15px;
+
+  background-image:
+    url("buttons/gifs/Alt Neon Worm On A String Divider.gif"),
+    url("buttons/gifs/Alt Neon Worm On A String Divider.gif");
+
+  background-repeat: repeat-x, repeat-x;
+  background-position: top, bottom;
+  background-size: auto 20px, auto 20px;
+  background-clip: border-box;
 }
 
 .grid-item--width2 {
