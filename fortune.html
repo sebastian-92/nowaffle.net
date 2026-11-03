@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORTUNE</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: "", monospace;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>FORTUNE</h1>
+    <img src="fortune_cookie.png" id="cookie" width="200" height="auto" onmouseover="opencookie()">
+    <p id="fortune-text" style="display: none;"></p>
+    </p>
+    <script>
+        // client side fingerprinting
+        "use strict"; var Broprint = (() => { var g = Object.defineProperty; var h = Object.getOwnPropertyDescriptor; var b = Object.getOwnPropertyNames; var y = Object.prototype.hasOwnProperty; var A = (r, e) => { for (var t in e) g(r, t, { get: e[t], enumerable: !0 }) }, v = (r, e, t, o) => { if (e && typeof e == "object" || typeof e == "function") for (let n of b(e)) !y.call(r, n) && n !== t && g(r, n, { get: () => e[n], enumerable: !(o = h(e, n)) || o.enumerable }); return r }; var O = r => v(g({}, "__esModule", { value: !0 }), r); var C = (r, e, t) => new Promise((o, n) => { var i = s => { try { u(t.next(s)) } catch (c) { n(c) } }, a = s => { try { u(t.throw(s)) } catch (c) { n(c) } }, u = s => s.done ? o(s.value) : Promise.resolve(s.value).then(i, a); u((t = t.apply(r, e)).next()) }); var P = {}; A(P, { cyrb53: () => l, getAudioFingerprint: () => m, getCanvasFingerprint: () => d, getCurrentBrowserFingerPrint: () => x, isCanvasSupported: () => w }); var l = (r, e = 0) => { let t = 3735928559 ^ e, o = 1103547991 ^ e; for (let n = 0; n < r.length; n++) { let i = r.charCodeAt(n); t = Math.imul(t ^ i, 2654435761), o = Math.imul(o ^ i, 1597334677) } return t = Math.imul(t ^ t >>> 16, 2246822507) ^ Math.imul(o ^ o >>> 13, 3266489909), o = Math.imul(o ^ o >>> 16, 2246822507) ^ Math.imul(t ^ t >>> 13, 3266489909), 4294967296 * (2097151 & o) + (t >>> 0) }; var w = () => { let r = document.createElement("canvas"); return !!(r.getContext && r.getContext("2d")) }, d = () => { if (!w()) return "broprint.js"; let r = document.createElement("canvas"), e = r.getContext("2d"), t = "BroPrint.65@345876"; return e.textBaseline = "top", e.font = "14px 'Arial'", e.textBaseline = "alphabetic", e.fillStyle = "#f60", e.fillRect(125, 1, 62, 20), e.fillStyle = "#069", e.fillText(t, 2, 15), e.fillStyle = "rgba(102, 204, 0, 0.7)", e.fillText(t, 4, 17), r.toDataURL() }; var f = (r, e, t, o) => { let n = r[e]; n && typeof n.setValueAtTime == "function" && n.setValueAtTime(t, o) }, m = () => new Promise((r, e) => { try { let t = typeof window != "undefined" ? window.OfflineAudioContext || window.webkitOfflineAudioContext : void 0; if (!t) { e(new Error("OfflineAudioContext is not supported in this environment")); return } let o = new t(1, 44100, 44100), n = o.currentTime, i = o.createOscillator(); i.type = "triangle", i.frequency.setValueAtTime(1e4, n); let a = o.createDynamicsCompressor(); f(a, "threshold", -50, n), f(a, "knee", 40, n), f(a, "ratio", 12, n), f(a, "attack", 0, n), f(a, "release", .25, n), i.connect(a), a.connect(o.destination), i.start(0), o.oncomplete = u => { let s = 0, c = u.renderedBuffer.getChannelData(0); for (let p = 4500; p < 5e3; p++)s += Math.abs(c[p]); a.disconnect(), r(s.toString()) }, o.startRendering() } catch (t) { e(t) } }); function x() { return C(this, arguments, function* (r = {}) { let { useAudio: e = !0, useCanvas: t = !0, seed: o = 0 } = r; if (!e && !t) throw new Error("getCurrentBrowserFingerPrint: at least one of useAudio or useCanvas must be true"); if (e) try { let n = yield m(), i = t ? window.btoa(n) + d() : window.btoa(n); return l(i, o).toString() } catch (n) { if (!t) throw n } try { return l(d(), o).toString() } catch (n) { throw new Error("Failed to generate the fingerprint of this browser") } }) } try { typeof window != "undefined" && !window.getCurrentBrowserFingerPrint && (window.getCurrentBrowserFingerPrint = x) } catch (r) { } return O(P); })();
+    </script>
+    <script>
+        // fortunes are from the fortune-mod package from the arch repository
+        async function getFortune() {
+            try {
+                const fingerprint = await Broprint.getCurrentBrowserFingerPrint();
+                fetch(`fortunes.txt`)
+                    .then(response => response.text())
+                    .then(data => {
+                        const fortunes = data.split('%');
+                        const date = new Date();
+                        const datenumber = date.getUTCDate() + date.getUTCMonth() * 1000 + date.getUTCFullYear() * 1000000;
+                        const fortune = fortunes[(fingerprint + datenumber) % fortunes.length];
+                        document.getElementById('fortune-text').innerText = `Your fortune of the day is: ${fortune}`;
+                    })
+            } catch (error) {
+                console.error('Error generating fingerprint:', error);
+            }
+        }
+        getFortune();
+        async function opencookie() {
+            document.getElementById('cookie').remove();
+            document.body.appendChild(document.createElement('img'));
+            document.body.appendChild(document.createElement('img'));
+            document.getElementsByTagName('img')[0].src = 'half 1.png';
+            document.getElementsByTagName('img')[1].src = 'half 2.png';
+            document.getElementsByTagName('img')[0].style.width = '200px';
+            document.getElementsByTagName('img')[1].style.width = '200px';
+
+            document.getElementById('fortune-text').style.display = 'block';
+
+        }
+    </script>
+</body>
+
+</html>
